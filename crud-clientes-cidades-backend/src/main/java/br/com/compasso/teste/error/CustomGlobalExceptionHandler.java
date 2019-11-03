@@ -1,16 +1,21 @@
 package br.com.compasso.teste.error;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -32,4 +37,25 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
 	        return new ResponseEntity<>(body, headers, status);
 	}
+	
+	@ExceptionHandler(CidadeNotFoundException.class)
+	public ResponseEntity<CustomErrorResponse>cidadeNotFound(CidadeNotFoundException ex, WebRequest request){
+		 CustomErrorResponse errors = new CustomErrorResponse();
+	        errors.setTimestamp(LocalDateTime.now());
+	        errors.setError(ex.getMessage());
+	        errors.setStatus(HttpStatus.NOT_FOUND.value());
+
+	        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler (ClienteNotFoundException.class)
+	public ResponseEntity<CustomErrorResponse> clienteNotFound(ClienteNotFoundException ex, WebRequest request){
+		CustomErrorResponse errors = new CustomErrorResponse();
+        errors.setTimestamp(LocalDateTime.now());
+        errors.setError(ex.getMessage());
+        errors.setStatus(HttpStatus.NOT_FOUND.value());
+
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+	}
+	
 }
