@@ -2,15 +2,15 @@ package br.com.compasso.teste.bo.impl;
 
 import java.util.Optional;
 
-import org.apache.catalina.authenticator.SavedRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import br.com.compasso.teste.bo.ClienteBO;
 import br.com.compasso.teste.error.CidadeNotFoundException;
 import br.com.compasso.teste.error.ClienteNotFoundException;
+import br.com.compasso.teste.error.SexoValidationException;
 import br.com.compasso.teste.model.Cidade;
 import br.com.compasso.teste.model.Cliente;
 import br.com.compasso.teste.repository.CidadeRepository;
@@ -27,12 +27,18 @@ public class ClienteBOImpl implements ClienteBO {
 	@Override
 	public Cliente cadastrarCliente(Cliente cliente) {
 		 Optional<Cidade> cidade = cidadeRepository.findByNome(cliente.getCidade());
+		 if(cliente.getSexo().toUpperCase().equals("MASCULINO") || cliente.getSexo().toUpperCase().equals("FEMININO")) {
 			if(cidade.isPresent()) {
+				cliente.setSexo(cliente.getSexo().toUpperCase());
 				return clienteRepository.save(cliente);
 			}
 			else {
 				throw new CidadeNotFoundException(cliente.getCidade());
 			}
+		 }
+		 else {
+			 throw new SexoValidationException();
+		 }
 		}
 
 	@Override

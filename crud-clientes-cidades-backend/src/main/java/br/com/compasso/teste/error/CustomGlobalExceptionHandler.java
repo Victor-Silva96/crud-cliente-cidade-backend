@@ -43,9 +43,9 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		 CustomErrorResponse errors = new CustomErrorResponse();
 	        errors.setTimestamp(LocalDateTime.now());
 	        errors.setError(ex.getMessage());
-	        errors.setStatus(HttpStatus.NOT_FOUND.value());
+	        errors.setStatus(HttpStatus.BAD_REQUEST.value());
 
-	        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+	        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler (ClienteNotFoundException.class)
@@ -56,6 +56,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         errors.setStatus(HttpStatus.NOT_FOUND.value());
 
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler (SexoValidationException.class)
+	public ResponseEntity<CustomErrorResponse> sexoValidation(SexoValidationException ex, WebRequest request){
+		CustomErrorResponse errors = new CustomErrorResponse();
+        errors.setTimestamp(LocalDateTime.now());
+        errors.setError(ex.getMessage());
+        errors.setStatus(HttpStatus.BAD_REQUEST.value());
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
 	
 }
