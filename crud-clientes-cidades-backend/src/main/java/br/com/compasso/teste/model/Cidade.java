@@ -12,9 +12,9 @@ public class Cidade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotEmpty(message = "Nome obrigátorio")
+	@NotEmpty(message = "Nome obrigatorio")
 	private String nome;
-	@NotEmpty(message = "Estado obrigátorio")
+	@NotEmpty(message = "Estado obrigatorio")
 	private String estado;
 	
 	

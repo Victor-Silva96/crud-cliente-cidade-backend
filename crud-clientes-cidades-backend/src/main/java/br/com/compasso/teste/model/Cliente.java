@@ -21,18 +21,18 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotEmpty(message = "Nome obrigátorio")
+	@NotEmpty(message = "Nome obrigatorio")
 	private String nome;
-	@NotEmpty(message = "Sexo obrigátorio")
+	@NotEmpty(message = "Sexo obrigatorio")
 	private String sexo;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_nascimento")
-	@NotNull(message = "Data obrigatória")
+	@NotNull(message = "Data obrigatoria")
 	@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo" )
 	private Date dataNascimento;
-	@NotNull(message = "Idade Obrigátoria")
+	@Range(min = 1, message = "Idade Obrigatoria e maior que 0")
 	private int idade;
-	@NotEmpty(message = "Cidade obrigátoria")
+	@NotEmpty(message = "Cidade obrigatoria")
 	private String cidade;
 	
 	public Long getId() {

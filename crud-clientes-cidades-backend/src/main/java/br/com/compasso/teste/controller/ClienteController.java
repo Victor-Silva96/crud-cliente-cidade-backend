@@ -39,7 +39,7 @@ public class ClienteController {
 	}
 	
 	@GetMapping("{id}")
-	public ResponseEntity<Cliente> buscaNome(@PathVariable Long id){
+	public ResponseEntity<Cliente> buscaId(@PathVariable Long id){
 		return clienteBO.buscaId(id);
 		
 	}
